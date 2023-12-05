@@ -10,14 +10,13 @@ function getPlayerChoice() {
         playerSelection.trim().toLowerCase() !== 'paper' &&
         playerSelection.trim().toLowerCase() !== 'scissors') {
         console.log(' Check your spelling! Rock, Paper or Scissors?');
-        getPlayerChoice();
     } else {
         return playerSelection.trim().toLowerCase();
     }
 }
 
 function playRound(player, computer) {
-    console.log(player);
+    console.log(player ?? 'Invalid weapon');
     console.log(computer);
 
     let result;
@@ -40,8 +39,11 @@ function playRound(player, computer) {
         case player === 'scissors' && computer === 'Paper':
             result = 'You Win! Scissors beat Paper.';
             break;
-        default:
+        case player === computer:
             result = 'Tie! Nobody wins.';
+            break;
+        default:
+            result = 'Nobody wins.';
             break;
     }
 
@@ -55,16 +57,16 @@ function game() {
     let computerPoints = 0;
 
     for (let i = 0; i < 5; i++) {
-        let playerSelection = getPlayerChoice();
-        let computerSelection = getComputerChoice();
+        const playerSelection = getPlayerChoice();
+        const computerSelection = getComputerChoice();
 
-        let roundWinner = playRound(playerSelection, computerSelection);
+        const roundWinner = playRound(playerSelection, computerSelection);
 
         if (roundWinner.includes('You Win!')) {
             playerPoints++;
         } else if (roundWinner.includes('You Lose!')) {
             computerPoints++;
-        } else if (roundWinner === 'Tie! Nobody wins.') {
+        } else {
             i--;
         }
 
@@ -78,7 +80,3 @@ function game() {
 }
 
 game();
-
-
-
-
