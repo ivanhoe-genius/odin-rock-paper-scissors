@@ -6,6 +6,11 @@ function getComputerChoice() {
 function getPlayerChoice() {
     const playerSelection = prompt('Rock, Paper or Scissors?');
 
+    if (playerSelection === null) {
+
+        throw new Error('Cancel pressed! Exiting game. Bye!');
+    }
+
     if (playerSelection.trim().toLowerCase() !== 'rock' &&
         playerSelection.trim().toLowerCase() !== 'paper' &&
         playerSelection.trim().toLowerCase() !== 'scissors') {
