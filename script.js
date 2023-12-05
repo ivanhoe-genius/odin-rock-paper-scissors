@@ -4,7 +4,7 @@ function getComputerChoice() {
 }
 
 function getPlayerChoice() {
-    let playerSelection = prompt('Rock, Paper or Scissors?');
+    const playerSelection = prompt('Rock, Paper or Scissors?');
 
     if (playerSelection.trim().toLowerCase() !== 'rock' &&
         playerSelection.trim().toLowerCase() !== 'paper' &&
@@ -15,9 +15,6 @@ function getPlayerChoice() {
         return playerSelection.trim().toLowerCase();
     }
 }
-
-let playerSelection = getPlayerChoice();
-let computerSelection = getComputerChoice();
 
 function playRound(player, computer) {
     console.log(player);
@@ -50,14 +47,38 @@ function playRound(player, computer) {
 
     console.log(result);
 
-    if (result === 'Tie! Nobody wins.') {
-        playerSelection = getPlayerChoice();
-        computerSelection = getComputerChoice();
-        playRound(playerSelection, computerSelection);
-    }
-
     return result;
 }
 
+function game() {
+    let playerPoints = 0;
+    let computerPoints = 0;
 
-playRound(playerSelection, computerSelection);
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = getPlayerChoice();
+        let computerSelection = getComputerChoice();
+
+        let roundWinner = playRound(playerSelection, computerSelection);
+
+        if (roundWinner.includes('You Win!')) {
+            playerPoints++;
+        } else if (roundWinner.includes('You Lose!')) {
+            computerPoints++;
+        } else if (roundWinner === 'Tie! Nobody wins.') {
+            i--;
+        }
+
+
+        console.log('Score: ' + 'You: ' + playerPoints + ' : ' + 'Computer: ' + computerPoints);
+        console.log(i);
+
+        i === 4 && console.log('Grand winner: ' + (playerPoints > computerPoints ? 'You!' : 'Computer!') + '\nThank you for playing!');
+
+    }
+}
+
+game();
+
+
+
+
