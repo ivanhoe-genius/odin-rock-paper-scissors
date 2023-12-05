@@ -9,37 +9,36 @@ function getPlayerChoice() {
     if (playerSelection.trim().toLowerCase() !== 'rock' &&
         playerSelection.trim().toLowerCase() !== 'paper' &&
         playerSelection.trim().toLowerCase() !== 'scissors') {
-        console.log(' Check your spelling! Rock, Paper or Scissors?');
+        console.log('Check your spelling!\nRock, Paper or Scissors?');
     } else {
         return playerSelection.trim().toLowerCase();
     }
 }
 
-function playRound(player, computer) {
-    console.log(player ?? 'Invalid weapon');
-    console.log(computer);
+function playRound(playerSelection, computerSelection) {
+    console.log('playerSelection: ' + (playerSelection ?? 'Invalid weapon') + '\ncomputerSelection: ' + computerSelection);
 
     let result;
     switch (true) {
-        case player === 'rock' && computer === 'Paper':
+        case playerSelection === 'rock' && computerSelection === 'Paper':
             result = 'You Lose! Paper beats Rock.';
             break;
-        case player === 'rock' && computer === 'Scissors':
+        case playerSelection === 'rock' && computerSelection === 'Scissors':
             result = 'You Win! Rock beats Scissors.';
             break;
-        case player === 'paper' && computer === 'Rock':
+        case playerSelection === 'paper' && computerSelection === 'Rock':
             result = 'You Win! Paper beats Rock.';
             break;
-        case player === 'paper' && computer === 'Scissors':
+        case playerSelection === 'paper' && computerSelection === 'Scissors':
             result = 'You Lose! Scissors beat Paper.';
             break;
-        case player === 'scissors' && computer === 'Rock':
+        case playerSelection === 'scissors' && computerSelection === 'Rock':
             result = 'You Lose! Rock beats Scissors.';
             break;
-        case player === 'scissors' && computer === 'Paper':
+        case playerSelection === 'scissors' && computerSelection === 'Paper':
             result = 'You Win! Scissors beat Paper.';
             break;
-        case player === computer:
+        case playerSelection === computerSelection:
             result = 'Tie! Nobody wins.';
             break;
         default:
