@@ -70,12 +70,9 @@ function game() {
             i--;
         }
 
-
-        console.log('Score: ' + 'You: ' + playerPoints + ' : ' + 'Computer: ' + computerPoints);
-        console.log(i);
+        console.log('Score: ' + 'You: ' + playerPoints + ' : ' + 'Computer: ' + computerPoints + '\nGame number: ' + (i === 0 ? 1 : i + 1) + '/5');
 
         i === 4 && console.log('Grand winner: ' + (playerPoints > computerPoints ? 'You!' : 'Computer!') + '\nThank you for playing!');
-
     }
 }
 
