@@ -16,41 +16,48 @@ function getPlayerChoice() {
     }
 }
 
-
-
 let playerSelection = getPlayerChoice();
-const computerSelection = getComputerChoice();
+let computerSelection = getComputerChoice();
 
-function playRound(playerSelection, computerSelection) {
-    console.log(playerSelection);
-    console.log(computerSelection);
+function playRound(player, computer) {
+    console.log(player);
+    console.log(computer);
 
     let result;
     switch (true) {
-        case playerSelection === 'rock' && computerSelection === 'Paper':
+        case player === 'rock' && computer === 'Paper':
             result = 'You Lose! Paper beats Rock.';
             break;
-        case playerSelection === 'rock' && computerSelection === 'Scissors':
+        case player === 'rock' && computer === 'Scissors':
             result = 'You Win! Rock beats Scissors.';
             break;
-        case playerSelection === 'paper' && computerSelection === 'Rock':
+        case player === 'paper' && computer === 'Rock':
             result = 'You Win! Paper beats Rock.';
             break;
-        case playerSelection === 'paper' && computerSelection === 'Scissors':
+        case player === 'paper' && computer === 'Scissors':
             result = 'You Lose! Scissors beat Paper.';
             break;
-        case playerSelection === 'scissors' && computerSelection === 'Rock':
+        case player === 'scissors' && computer === 'Rock':
             result = 'You Lose! Rock beats Scissors.';
             break;
-        case playerSelection === 'scissors' && computerSelection === 'Paper':
+        case player === 'scissors' && computer === 'Paper':
             result = 'You Win! Scissors beat Paper.';
             break;
         default:
             result = 'Tie! Nobody wins.';
             break;
     }
+
+    console.log(result);
+
+    if (result === 'Tie! Nobody wins.') {
+        playerSelection = getPlayerChoice();
+        computerSelection = getComputerChoice();
+        playRound(playerSelection, computerSelection);
+    }
+
     return result;
 }
 
 
-console.log(playRound(playerSelection, computerSelection));
+playRound(playerSelection, computerSelection);
