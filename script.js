@@ -1,27 +1,14 @@
+const resultsDiv = document.querySelector('#results');
+
 function getComputerChoice() {
     const computerChoices = ['Rock', 'Paper', 'Scissors'];
     return computerChoices[Math.floor(Math.random() * 3)];
 }
 
-function getPlayerChoice() {
-    const playerSelection = prompt('Rock, Paper or Scissors?');
-
-    if (playerSelection === null) {
-
-        throw new Error('Cancel pressed! Exiting game. Bye!');
-    }
-
-    if (playerSelection.trim().toLowerCase() !== 'rock' &&
-        playerSelection.trim().toLowerCase() !== 'paper' &&
-        playerSelection.trim().toLowerCase() !== 'scissors') {
-        console.log('Check your spelling!\nRock, Paper or Scissors?');
-    } else {
-        return playerSelection.trim().toLowerCase();
-    }
-}
-
 function playRound(playerSelection, computerSelection) {
-    console.log('playerSelection: ' + (playerSelection ?? 'Invalid weapon') + '\ncomputerSelection: ' + computerSelection);
+    const weapons = document.createElement('p');
+    weapons.textContent = '-- playerSelection: ' + (playerSelection ?? 'Invalid weapon') + '-- computerSelection: ' + computerSelection;
+    resultsDiv.appendChild(weapons);
 
     let result;
     switch (true) {
@@ -51,33 +38,64 @@ function playRound(playerSelection, computerSelection) {
             break;
     }
 
-    console.log(result);
+    const infoParagraph = document.createElement('p');
+    infoParagraph.textContent = result;
+    resultsDiv.appendChild(infoParagraph);
 
     return result;
 }
 
-function game() {
-    let playerPoints = 0;
-    let computerPoints = 0;
+let gameNumber = 0;
+let playerPoints = 0;
+let computerPoints = 0;
 
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
+function game(playerSelection, computerSelection) {
 
-        const roundWinner = playRound(playerSelection, computerSelection);
+    if (gameNumber === 0) {
+        resultsDiv.innerHTML = null;
+    }
 
+    const roundWinner = playRound(playerSelection, computerSelection);
+
+    if (playerPoints < 5 && computerPoints < 5) {
         if (roundWinner.includes('You Win!')) {
             playerPoints++;
         } else if (roundWinner.includes('You Lose!')) {
             computerPoints++;
-        } else {
-            i--;
         }
 
-        console.log('Score: ' + 'You: ' + playerPoints + ' : ' + 'Computer: ' + computerPoints + '\nGame number: ' + (i === 0 ? 1 : i + 1) + '/5');
+        const scoreParagraph = document.createElement('p');
 
-        i === 4 && console.log('Grand winner: ' + (playerPoints > computerPoints ? 'You!' : 'Computer!') + '\nThank you for playing!');
+        scoreParagraph.textContent = 'Score: ' + 'You: ' + playerPoints + ' : ' + 'Computer: ' + computerPoints + ' Game number: ' + (gameNumber === 0 ? 1 : gameNumber + 1);
+
+        resultsDiv.appendChild(scoreParagraph);
+
+        const newLine = document.createElement('br');
+        resultsDiv.appendChild(newLine);
+
+        if (playerPoints === 5 || computerPoints === 5) {
+            const grandWinnerParagraph = document.createElement('p');
+
+            grandWinnerParagraph.textContent = ('***Grand winner: ' + (playerPoints > computerPoints ? 'You!' : 'Computer!') + ' Thank you for playing!***');
+
+            resultsDiv.appendChild(grandWinnerParagraph);
+            resultsDiv.appendChild(newLine);
+
+            gameNumber = -1;
+            playerPoints = 0;
+            computerPoints = 0;
+        }
+
+        gameNumber++;
+
     }
 }
 
-game();
+const buttonList = document.querySelectorAll('input[type=button]');
+
+buttonList.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        game(event.target.value.toLowerCase(), getComputerChoice());
+    });
+})
+
